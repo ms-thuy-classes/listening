@@ -67,95 +67,117 @@
         <!-- BÀI TẬP (EXERCISES) - XÓA PHẦN KHÔNG CẦN -->
         <!-- ========================================== -->
 
-        <!-- BÀI 1: Nghe và điền vào Transcript -->
-        <section class="lesson-section fade-in-up delay-2">
-            <h2 class="section-title">✏️ Bài 1: Listen and fill in the missing words</h2>
-            <div class="transcript-gapfill">
-                <p><strong>Receptionist:</strong> Good morning, how can I <input type="text" class="gap-input" placeholder="..."> you?</p>
-                <p><strong>Customer:</strong> I'd like to <input type="text" class="gap-input" placeholder="..."> a room for tonight.</p>
-                <p><strong>Receptionist:</strong> Certainly. For how many <input type="text" class="gap-input" placeholder="...">?</p>
+               <!-- ========================================== -->
+        <!-- THÔNG TIN HỌC SINH -->
+        <!-- ========================================== -->
+        <section class="student-info-box fade-in-up delay-1">
+            <label for="student-name">👤 Tên học sinh:</label>
+            <input type="text" id="student-name" class="student-name-input" placeholder="Nhập tên của bạn để bắt đầu làm bài...">
+        </section>
+
+        <!-- ========================================== -->
+        <!-- BÀI 1: Gap-fill (Nghe và điền vào transcript) -->
+        <!-- ========================================== -->
+        <section class="lesson-section fade-in-up delay-2" id="exercise-1">
+            <div class="exercise-header">
+                <h2 class="section-title" style="margin:0; border:none; padding:0;">✏️ Bài 1: Listen and fill in the missing words</h2>
+                <div class="exercise-controls">
+                    <span class="score-display" id="score-1">Chưa làm</span>
+                    <button class="btn-check" onclick="checkExercise(1, 'text')">Kiểm tra</button>
+                    <button class="btn-reset" onclick="resetExercise(1, 'text')">Làm lại</button>
+                </div>
             </div>
-            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
-            <div class="answer-key">
-                <p>1. help</p>
-                <p>2. book</p>
-                <p>3. nights</p>
+            <div class="transcript-gapfill">
+                <p><strong>Receptionist:</strong> Good morning, how can I <input type="text" class="gap-input" data-answer="help" placeholder="..."> you?</p>
+                <p><strong>Customer:</strong> I'd like to <input type="text" class="gap-input" data-answer="book" placeholder="..."> a room for tonight.</p>
+                <p><strong>Receptionist:</strong> Certainly. For how many <input type="text" class="gap-input" data-answer="nights" placeholder="...">?</p>
             </div>
         </section>
 
-        <!-- BÀI 2: Nghe và điền vào Form / Summary -->
-        <section class="lesson-section fade-in-up delay-2">
-            <h2 class="section-title">✏️ Bài 2: Complete the form below</h2>
+        <!-- ========================================== -->
+        <!-- BÀI 2: Form / Summary filling -->
+        <!-- ========================================== -->
+        <section class="lesson-section fade-in-up delay-2" id="exercise-2">
+            <div class="exercise-header">
+                <h2 class="section-title" style="margin:0; border:none; padding:0;">✏️ Bài 2: Complete the form below</h2>
+                <div class="exercise-controls">
+                    <span class="score-display" id="score-2">Chưa làm</span>
+                    <button class="btn-check" onclick="checkExercise(2, 'text')">Kiểm tra</button>
+                    <button class="btn-reset" onclick="resetExercise(2, 'text')">Làm lại</button>
+                </div>
+            </div>
             <table class="form-table">
                 <tr>
                     <td><strong>Full Name:</strong></td>
-                    <td><input type="text" class="gap-input" placeholder="Enter name..."></td>
+                    <td><input type="text" class="gap-input" data-answer="john smith" placeholder="Enter name..."></td>
                 </tr>
                 <tr>
                     <td><strong>Phone Number:</strong></td>
-                    <td><input type="text" class="gap-input" placeholder="Enter phone..."></td>
-                </tr>
-                <tr>
-                    <td><strong>Check-in Date:</strong></td>
-                    <td><input type="text" class="gap-input" placeholder="Enter date..."></td>
+                    <td><input type="text" class="gap-input" data-answer="0909123456" placeholder="Enter phone..."></td>
                 </tr>
                 <tr>
                     <td><strong>Room Type:</strong></td>
-                    <td><input type="text" class="gap-input" placeholder="Enter room type..."></td>
+                    <td><input type="text" class="gap-input" data-answer="double" placeholder="Enter room type..."></td>
                 </tr>
+            </tr>
             </table>
-            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
-            <div class="answer-key">
-                <p><strong>Name:</strong> John Smith</p>
-                <p><strong>Phone:</strong> 0909 123 456</p>
-                <p><strong>Date:</strong> 15th October</p>
-                <p><strong>Room:</strong> Double room with sea view</p>
-            </div>
         </section>
 
+        <!-- ========================================== -->
         <!-- BÀI 3: Multiple Choice -->
-        <section class="lesson-section fade-in-up delay-2">
-            <h2 class="section-title">✏️ Bài 3: Multiple Choice</h2>
+        <!-- ========================================== -->
+        <section class="lesson-section fade-in-up delay-2" id="exercise-3">
+            <div class="exercise-header">
+                <h2 class="section-title" style="margin:0; border:none; padding:0;">✏️ Bài 3: Multiple Choice</h2>
+                <div class="exercise-controls">
+                    <span class="score-display" id="score-3">Chưa làm</span>
+                    <button class="btn-check" onclick="checkExercise(3, 'radio')">Kiểm tra</button>
+                    <button class="btn-reset" onclick="resetExercise(3, 'radio')">Làm lại</button>
+                </div>
+            </div>
             
-            <div class="exercise-item">
+            <div class="exercise-item" data-question="1">
                 <p class="exercise-question">1. What is the main purpose of the conversation?</p>
                 <div class="exercise-options">
-                    <label><input type="radio" name="mc1"> A) To cancel a reservation</label>
-                    <label><input type="radio" name="mc1"> B) To book a room for the night</label>
-                    <label><input type="radio" name="mc1"> C) To ask about room facilities</label>
+                    <label><input type="radio" name="q3_1" value="A"> A) To cancel a reservation</label>
+                    <label><input type="radio" name="q3_1" value="B" data-answer="true"> B) To book a room for the night</label>
+                    <label><input type="radio" name="q3_1" value="C"> C) To ask about room facilities</label>
                 </div>
-                <button class="btn-open toggle-answer" style="margin-top: 10px; border: none; cursor: pointer;">Xem đáp án</button>
-                <div class="answer-key"><strong>Đáp án:</strong> B) To book a room for the night</div>
             </div>
 
-            <div class="exercise-item">
+            <div class="exercise-item" data-question="2">
                 <p class="exercise-question">2. How long will the customer stay?</p>
                 <div class="exercise-options">
-                    <label><input type="radio" name="mc2"> A) One night</label>
-                    <label><input type="radio" name="mc2"> B) Two nights</label>
-                    <label><input type="radio" name="mc2"> C) Three nights</label>
+                    <label><input type="radio" name="q3_2" value="A"> A) One night</label>
+                    <label><input type="radio" name="q3_2" value="B" data-answer="true"> B) Two nights</label>
+                    <label><input type="radio" name="q3_2" value="C"> C) Three nights</label>
                 </div>
-                <button class="btn-open toggle-answer" style="margin-top: 10px; border: none; cursor: pointer;">Xem đáp án</button>
-                <div class="answer-key"><strong>Đáp án:</strong> B) Two nights</div>
             </div>
         </section>
 
+        <!-- ========================================== -->
         <!-- BÀI 4: Matching -->
-        <section class="lesson-section fade-in-up delay-2">
-            <h2 class="section-title">✏️ Bài 4: Matching</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary);">Nối mỗi người với vai trò hoặc công việc của họ trong đoạn nghe.</p>
+        <!-- ========================================== -->
+        <section class="lesson-section fade-in-up delay-2" id="exercise-4">
+            <div class="exercise-header">
+                <h2 class="section-title" style="margin:0; border:none; padding:0;">✏️ Bài 4: Matching</h2>
+                <div class="exercise-controls">
+                    <span class="score-display" id="score-4">Chưa làm</span>
+                    <button class="btn-check" onclick="checkExercise(4, 'select')">Kiểm tra</button>
+                    <button class="btn-reset" onclick="resetExercise(4, 'select')">Làm lại</button>
+                </div>
+            </div>
+            <p style="margin-bottom: 15px; color: var(--text-secondary);">Nối mỗi người với vai trò của họ.</p>
             
             <div class="matching-container">
                 <div class="match-col">
-                    <p><strong>People</strong></p>
                     <p><strong>1.</strong> Sarah</p>
                     <p><strong>2.</strong> David</p>
                     <p><strong>3.</strong> Emma</p>
                 </div>
                 <div class="match-col">
-                    <p><strong>Roles</strong></p>
                     <p>
-                        <select class="match-select">
+                        <select class="match-select" data-answer="receptionist">
                             <option value="">-- Chọn vai trò --</option>
                             <option value="manager">Hotel Manager</option>
                             <option value="receptionist">Receptionist</option>
@@ -163,7 +185,7 @@
                         </select>
                     </p>
                     <p>
-                        <select class="match-select">
+                        <select class="match-select" data-answer="chef">
                             <option value="">-- Chọn vai trò --</option>
                             <option value="manager">Hotel Manager</option>
                             <option value="receptionist">Receptionist</option>
@@ -171,23 +193,34 @@
                         </select>
                     </p>
                     <p>
-                        <select class="match-select">
+                        <select class="match-select" data-answer="manager">
                             <option value="">-- Chọn vai trò --</option>
                             <option value="manager">Hotel Manager</option>
                             <option value="receptionist">Receptionist</option>
                             <option value="chef">Head Chef</option>
                         </select>
-                    </p>
+                    </p
                 </div>
-            </div>
-            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
-            <div class="answer-key">
-                <p>1 - Receptionist (Sarah is working at the front desk)</p>
-                <p>2 - Head Chef (David is preparing the menu for tonight)</p>
-                <p>3 - Hotel Manager (Emma is checking the guest reviews)</p>
             </div>
         </section>
 
+        <!-- ========================================== -->
+        <!-- TRANSCRIPT (Bị khóa cho đến khi làm hết) -->
+        <!-- ========================================== -->
+        <section class="lesson-section transcript-section fade-in-up delay-2" id="transcript-section">
+            <div class="transcript-overlay" id="transcript-overlay">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary); margin-bottom: 10px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <h3>Transcript đang bị khóa</h3>
+                <p>Hãy hoàn thành và nhấn "Kiểm tra" ở tất cả các bài tập trên để mở khóa phần lời nghe.</p>
+                <button class="unlock-btn" id="unlock-transcript-btn" disabled>🔒 Mở khóa Transcript</button>
+            </div>
+            
+            <h2 class="section-title">📝 Full Transcript</h2>
+            <p><strong>Receptionist:</strong> Good morning, how can I help you?</p>
+            <p><strong>Customer:</strong> I'd like to book a room for tonight.</p>
+            <p><strong>Receptionist:</strong> Certainly. For how many nights?</p>
+            <p><strong>Customer:</strong> Two nights, please. My name is John Smith.</p>
+        </section>
         <!-- Navigation -->
         <nav class="lesson-nav">
             <a href="#" id="prev-lesson-btn" class="nav-btn" style="display: none;">← Bài trước</a>
