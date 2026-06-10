@@ -2,26 +2,52 @@
    1. CSS VARIABLES & THEME
    ========================================= */
 :root {
-    --primary-gradient: linear-gradient(135deg, #FFAFCC 0%, #A2D2FF 50%, #C1E1C1 100%);
-    --lavender: #E6E6FA;
-    --sky-blue: #A2D2FF;
-    --mint: #C1E1C1;
-    --peach: #FFC8A2;
-    --soft-pink: #FFAFCC;
-    
-    --bg-body: #F8F9FA;
-    --bg-card: #FFFFFF;
-    --bg-surface: #FFFFFF;
-    --text-primary: #2D3436;
-    --text-secondary: #636E72;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
-    --shadow-hover: 0 12px 40px rgba(31, 38, 135, 0.15);
-    
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Pastel Theme */
+    --primary-gradient: linear-gradient(
+        135deg,
+        #FFAFCC 0%,
+        #A2D2FF 50%,
+        #C1E1C1 100%
+    );
+
+    --lavender:#E6E6FA;
+    --sky-blue:#A2D2FF;
+    --mint:#C1E1C1;
+    --peach:#FFC8A2;
+    --soft-pink:#FFAFCC;
+
+    /* Background */
+    --bg-body:#F8F9FA;
+    --bg-card:#FFFFFF;
+    --bg-surface:#FFFFFF;
+
+    /* TEXT (đậm hơn nhiều) */
+    --text-primary:#1F2937;
+    --text-secondary:#4B5563;
+    --text-light:#6B7280;
+
+    /* Accent */
+    --heading-color:#312E81;
+    --link-color:#2563EB;
+    --success:#15803D;
+    --danger:#DC2626;
+
+    --border-color:rgba(0,0,0,.10);
+
+    --shadow:
+        0 8px 32px rgba(31,38,135,.08);
+
+    --shadow-hover:
+        0 12px 40px rgba(31,38,135,.16);
+
+    --radius-sm:8px;
+    --radius-md:16px;
+    --radius-lg:24px;
+
+    --transition:
+        all .3s cubic-bezier(.4,0,.2,1);
+
 }
 
 [data-theme="dark"] {
@@ -319,7 +345,7 @@ img { max-width: 100%; display: block; }
 .btn-open {
     padding: 8px 16px;
     background: var(--text-primary);
-    color: var(--bg-body);
+     color:#FFFFFF;
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -856,7 +882,7 @@ img { max-width: 100%; display: block; }
     font-size:24px;
     font-weight:700;
     margin-bottom:20px;
-    color:#5b4b8a;
+    color:var(--heading-color);
 }
 
 .result-grid{
