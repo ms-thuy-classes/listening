@@ -1,75 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lesson - Learn with Ms. Thúy</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    .lesson-container { max-width: 900px; margin: 2rem auto; padding: 2rem; background: var(--card-bg); border-radius: 2rem; backdrop-filter: blur(8px); }
-    .audio-player-custom { background: #eef2ff; padding: 1rem; border-radius: 3rem; margin: 1.5rem 0; }
-    .vocab-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-    .vocab-table td, .vocab-table th { border-bottom: 1px solid #ddd; padding: 8px; }
-    .exercise-box { background: rgba(167,139,250,0.1); padding: 1rem; border-radius: 1rem; margin: 1rem 0; }
-    .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson - Learn with Ms. Thúy</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-  <nav class="navbar glass-nav"><div class="nav-container"><div class="logo"><img src="../assets/logo.png" onerror="this.src='https://placehold.co/40x40?text=MT'"><span>Learn with Ms. Thúy</span></div><div class="nav-links"><a href="../index.html">Home</a><button id="darkModeToggle" class="dark-toggle"><i class="fas fa-moon"></i></button></div></div></nav>
-  
-  <div class="lesson-container" id="lessonContent">
-    <div id="breadcrumb"><a href="../index.html">Home</a> / <span id="lessonTitle">Loading...</span></div>
-    <h1 id="lessonTitleH1"></h1>
-    <p id="lessonDesc"></p>
-    <div><span class="badge" id="catBadge"></span> <span class="badge" id="levelBadge"></span> <span id="durationBadge"></span></div>
-    
-    <div class="audio-player-custom" id="audioPlayerArea">
-      <audio id="audioElement" controls style="width:100%"></audio>
-      <div><label>Playback speed: </label><select id="speedSelect"><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option></select></div>
-    </div>
-    
-    <h3>📝 Transcript</h3><div id="transcript"></div>
-    <h3>📖 Vocabulary</h3><table class="vocab-table" id="vocabTable"></table>
-    <h3>✍️ Notes</h3><div id="notes"></div>
-    <h3>📚 Exercises</h3><div id="exercises"></div>
-    <h3>🔍 Answers</h3><div id="answers"></div>
-    <div class="nav-buttons"><a href="../index.html" class="btn-lesson">🏠 Back to Home</a></div>
-  </div>
-  <footer class="footer"><div class="footer-container"><div>© 2025 Learn with Ms. Thúy</div></div></footer>
-  <script>
-    // Get lesson id from file name: lesson1.html -> id=1 (index 0 in array)
-    const pathParts = window.location.pathname.split('/');
-    let fileName = pathParts[pathParts.length-1];
-    let lessonId = parseInt(fileName.replace('lesson','').replace('.html','')) - 1;
-    fetch('../data/lessons.json').then(res=>res.json()).then(lessons=>{
-      const lesson = lessons[lessonId];
-      if(!lesson){ document.getElementById('lessonContent').innerHTML='<p>Lesson not found</p>'; return; }
-      document.title = lesson.title;
-      document.getElementById('breadcrumb').innerHTML = `<a href="../index.html">Home</a> / ${lesson.title}`;
-      document.getElementById('lessonTitleH1').innerText = lesson.title;
-      document.getElementById('lessonDesc').innerText = lesson.description;
-      document.getElementById('catBadge').innerText = lesson.category;
-      document.getElementById('levelBadge').innerText = lesson.level;
-      document.getElementById('durationBadge').innerHTML = `<i class="far fa-clock"></i> ${lesson.duration}`;
-      const audio = document.getElementById('audioElement');
-      audio.src = '../'+lesson.audio;
-      const speedSelect = document.getElementById('speedSelect');
-      speedSelect.addEventListener('change',()=> audio.playbackRate = parseFloat(speedSelect.value));
-      document.getElementById('transcript').innerHTML = lesson.transcript || '<p>Transcript coming soon.</p>';
-      if(lesson.vocabulary){
-        let html = '<tr><th>Word</th><th>Meaning</th></tr>';
-        lesson.vocabulary.forEach(v=> html+=`<tr><td>${v[0]}</td><td>${v[1]}</td></tr>`);
-        document.getElementById('vocabTable').innerHTML = html;
-      } else document.getElementById('vocabTable').innerHTML = '<tr><td colspan="2">No vocabulary added.</td></tr>';
-      document.getElementById('notes').innerHTML = lesson.notes || '<p>Add your personal notes here.</p>';
-      document.getElementById('exercises').innerHTML = lesson.exercises || '<div class="exercise-box">Exercises will be available soon.</div>';
-      document.getElementById('answers').innerHTML = lesson.answers || '<p>Answers provided after completion.</p>';
-    }).catch(()=>document.getElementById('lessonContent').innerHTML='<p>Error loading lesson data.</p>');
-    // Dark mode
-    if(localStorage.getItem("darkMode")==="enabled") document.body.classList.add("dark");
-    document.getElementById("darkModeToggle")?.addEventListener("click",()=>{ document.body.classList.toggle("dark"); localStorage.setItem("darkMode",document.body.classList.contains("dark")?"enabled":"disabled"); });
-  </script>
+<!-- ⚠️ QUAN TRỌNG: Đổi số thứ tự ở data-lesson-index cho mỗi bài (bài 1 là 0, bài 2 là 1...) -->
+<body data-lesson-index="0">
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🎧</span>
+                <span class="logo-text">Learn with Ms. Thúy</span>
+            </a>
+            <a href="../index.html" class="btn-open">← Về trang chủ</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Header -->
+        <header class="lesson-header fade-in-up">
+            <div class="breadcrumb"><a href="../index.html">Trang chủ</a> / <span id="category-badge" class="badge badge-category">Category</span></div>
+            <h1 class="lesson-title" id="lesson-title">Đang tải...</h1>
+            <p class="card-desc" id="lesson-desc" style="font-size: 1.1rem; margin-bottom: 20px;">Đang tải mô tả...</p>
+            <div class="lesson-meta">
+                <span class="badge badge-level" id="level-badge">Level</span>
+                <span class="duration" id="duration-badge">⏱️ Duration</span>
+            </div>
+        </header>
+
+        <!-- Audio Player -->
+        <section class="custom-audio-player fade-in-up delay-1">
+            <audio id="lesson-audio"></audio>
+            <div class="player-controls">
+                <button class="play-btn" id="play-btn" aria-label="Play/Pause">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <div class="progress-container">
+                    <span class="time-display" id="current-time">0:00</span>
+                    <input type="range" class="progress-bar" id="progress-bar" value="0" min="0" max="100">
+                    <span class="time-display" id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="player-extras">
+                <select class="speed-select" id="speed-control" aria-label="Playback Speed">
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1.0x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2.0x</option>
+                </select>
+                <input type="range" class="volume-control" id="volume-control" min="0" max="1" step="0.1" value="1" title="Volume" aria-label="Volume">
+            </div>
+        </section>
+
+        <!-- Transcript (Full text for reference) -->
+        <section class="lesson-section fade-in-up delay-2">
+            <h2 class="section-title">📝 Transcript (Lời nghe)</h2>
+            <p><em>(Dán toàn bộ nội dung bài nghe vào đây. Học sinh có thể đọc lại sau khi làm bài tập.)</em></p>
+            <p><strong>Receptionist:</strong> Good morning, how can I help you?</p>
+            <p><strong>Customer:</strong> I'd like to book a room for tonight.</p>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- BÀI TẬP (EXERCISES) - XÓA PHẦN KHÔNG CẦN -->
+        <!-- ========================================== -->
+
+        <!-- BÀI 1: Nghe và điền vào Transcript -->
+        <section class="lesson-section fade-in-up delay-2">
+            <h2 class="section-title">✏️ Bài 1: Listen and fill in the missing words</h2>
+            <div class="transcript-gapfill">
+                <p><strong>Receptionist:</strong> Good morning, how can I <input type="text" class="gap-input" placeholder="..."> you?</p>
+                <p><strong>Customer:</strong> I'd like to <input type="text" class="gap-input" placeholder="..."> a room for tonight.</p>
+                <p><strong>Receptionist:</strong> Certainly. For how many <input type="text" class="gap-input" placeholder="...">?</p>
+            </div>
+            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
+            <div class="answer-key">
+                <p>1. help</p>
+                <p>2. book</p>
+                <p>3. nights</p>
+            </div>
+        </section>
+
+        <!-- BÀI 2: Nghe và điền vào Form / Summary -->
+        <section class="lesson-section fade-in-up delay-2">
+            <h2 class="section-title">✏️ Bài 2: Complete the form below</h2>
+            <table class="form-table">
+                <tr>
+                    <td><strong>Full Name:</strong></td>
+                    <td><input type="text" class="gap-input" placeholder="Enter name..."></td>
+                </tr>
+                <tr>
+                    <td><strong>Phone Number:</strong></td>
+                    <td><input type="text" class="gap-input" placeholder="Enter phone..."></td>
+                </tr>
+                <tr>
+                    <td><strong>Check-in Date:</strong></td>
+                    <td><input type="text" class="gap-input" placeholder="Enter date..."></td>
+                </tr>
+                <tr>
+                    <td><strong>Room Type:</strong></td>
+                    <td><input type="text" class="gap-input" placeholder="Enter room type..."></td>
+                </tr>
+            </table>
+            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
+            <div class="answer-key">
+                <p><strong>Name:</strong> John Smith</p>
+                <p><strong>Phone:</strong> 0909 123 456</p>
+                <p><strong>Date:</strong> 15th October</p>
+                <p><strong>Room:</strong> Double room with sea view</p>
+            </div>
+        </section>
+
+        <!-- BÀI 3: Multiple Choice -->
+        <section class="lesson-section fade-in-up delay-2">
+            <h2 class="section-title">✏️ Bài 3: Multiple Choice</h2>
+            
+            <div class="exercise-item">
+                <p class="exercise-question">1. What is the main purpose of the conversation?</p>
+                <div class="exercise-options">
+                    <label><input type="radio" name="mc1"> A) To cancel a reservation</label>
+                    <label><input type="radio" name="mc1"> B) To book a room for the night</label>
+                    <label><input type="radio" name="mc1"> C) To ask about room facilities</label>
+                </div>
+                <button class="btn-open toggle-answer" style="margin-top: 10px; border: none; cursor: pointer;">Xem đáp án</button>
+                <div class="answer-key"><strong>Đáp án:</strong> B) To book a room for the night</div>
+            </div>
+
+            <div class="exercise-item">
+                <p class="exercise-question">2. How long will the customer stay?</p>
+                <div class="exercise-options">
+                    <label><input type="radio" name="mc2"> A) One night</label>
+                    <label><input type="radio" name="mc2"> B) Two nights</label>
+                    <label><input type="radio" name="mc2"> C) Three nights</label>
+                </div>
+                <button class="btn-open toggle-answer" style="margin-top: 10px; border: none; cursor: pointer;">Xem đáp án</button>
+                <div class="answer-key"><strong>Đáp án:</strong> B) Two nights</div>
+            </div>
+        </section>
+
+        <!-- BÀI 4: Matching -->
+        <section class="lesson-section fade-in-up delay-2">
+            <h2 class="section-title">✏️ Bài 4: Matching</h2>
+            <p style="margin-bottom: 15px; color: var(--text-secondary);">Nối mỗi người với vai trò hoặc công việc của họ trong đoạn nghe.</p>
+            
+            <div class="matching-container">
+                <div class="match-col">
+                    <p><strong>People</strong></p>
+                    <p><strong>1.</strong> Sarah</p>
+                    <p><strong>2.</strong> David</p>
+                    <p><strong>3.</strong> Emma</p>
+                </div>
+                <div class="match-col">
+                    <p><strong>Roles</strong></p>
+                    <p>
+                        <select class="match-select">
+                            <option value="">-- Chọn vai trò --</option>
+                            <option value="manager">Hotel Manager</option>
+                            <option value="receptionist">Receptionist</option>
+                            <option value="chef">Head Chef</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select class="match-select">
+                            <option value="">-- Chọn vai trò --</option>
+                            <option value="manager">Hotel Manager</option>
+                            <option value="receptionist">Receptionist</option>
+                            <option value="chef">Head Chef</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select class="match-select">
+                            <option value="">-- Chọn vai trò --</option>
+                            <option value="manager">Hotel Manager</option>
+                            <option value="receptionist">Receptionist</option>
+                            <option value="chef">Head Chef</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <button class="btn-open toggle-answer" style="border: none; cursor: pointer;">Xem đáp án</button>
+            <div class="answer-key">
+                <p>1 - Receptionist (Sarah is working at the front desk)</p>
+                <p>2 - Head Chef (David is preparing the menu for tonight)</p>
+                <p>3 - Hotel Manager (Emma is checking the guest reviews)</p>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="lesson-nav">
+            <a href="#" id="prev-lesson-btn" class="nav-btn" style="display: none;">← Bài trước</a>
+            <a href="../index.html" class="nav-btn">Về trang chủ</a>
+            <a href="#" id="next-lesson-btn" class="nav-btn" style="display: none;">Bài tiếp theo →</a>
+        </nav>
+    </main>
+
+    <footer class="footer glass">
+        <div class="container footer-bottom">
+            <p>&copy; 2024 Learn with Ms. Thúy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/lesson.js"></script>
 </body>
 </html>
