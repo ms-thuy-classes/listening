@@ -1,4 +1,11 @@
+// =========================================
+// GLOBAL STATE
+// =========================================
 const scoreStorage = {};
+
+// =========================================
+// MAIN INITIALIZATION
+// =========================================
 document.addEventListener('DOMContentLoaded', async () => {
     const lessonIndex = parseInt(document.body.getAttribute('data-lesson-index'), 10);
     
@@ -30,8 +37,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Setup Navigation
         const prevBtn = document.getElementById('prev-lesson-btn');
         const nextBtn = document.getElementById('next-lesson-btn');
-        if (lessonIndex > 0) { prevBtn.href = `lesson${lessonIndex}.html`; prevBtn.style.display = 'block'; }
-        if (lessonIndex < lessons.length - 1) { nextBtn.href = `lesson${lessonIndex + 2}.html`; nextBtn.style.display = 'block'; }
+        if (lessonIndex > 0) { 
+            prevBtn.href = `lesson${lessonIndex}.html`; 
+            prevBtn.style.display = 'block'; 
+        }
+        if (lessonIndex < lessons.length - 1) { 
+            nextBtn.href = `lesson${lessonIndex + 2}.html`; 
+            nextBtn.style.display = 'block'; 
+        }
 
         initAudioPlayer(audioEl);
         initStudentName();
@@ -45,410 +58,210 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =========================================
 // STUDENT NAME MANAGEMENT
 // =========================================
-document.addEventListener("DOMContentLoaded",()=>{
+function initStudentName() {
+    const startBtn = document.getElementById("start-btn");
+    const nameInput = document.getElementById("student-name");
+    const nameDisplay = document.getElementById("student-display");
 
-const startBtn=document.getElementById("start-btn");
+    // Load saved name
+    const savedName = localStorage.getItem('student_name_ms_thuy');
+    if (savedName && nameInput) {
+        nameInput.value = savedName;
+        if (nameDisplay) nameDisplay.textContent = savedName;
+    }
 
-startBtn.addEventListener("click",()=>{
+    // Save on input
+    if (nameInput) {
+        nameInput.addEventListener('input', (e) => {
+            localStorage.setItem('student_name_ms_thuy', e.target.value.trim());
+        });
+    }
 
-const name=document.getElementById("student-name").value.trim();
-
-if(name===""){
-
-alert("Vui lòng nhập tên học sinh!");
-
-document.getElementById("student-name").focus();
-
-return;
-
+    // Start button handler
+    if (startBtn && nameInput) {
+        startBtn.addEventListener("click", () => {
+            const name = nameInput.value.trim();
+            if (name === "") {
+                alert("Vui lòng nhập tên học sinh!");
+                nameInput.focus();
+                return;
+            }
+            if (nameDisplay) nameDisplay.textContent = name;
+            localStorage.setItem('student_name_ms_thuy', name);
+        });
+    }
 }
-
-document.getElementById("student-display").textContent=name;
-
-});
 
 // =========================================
 // DASHBOARD
 // =========================================
-const scoreStorage = {};
-
-function updateResultDashboard(){
-
+function updateResultDashboard() {
     let totalCorrect = 0;
     let totalQuestion = 0;
 
-    Object.values(scoreStorage).forEach(item=>{
-
+    Object.values(scoreStorage).forEach(item => {
         totalCorrect += item.correct;
         totalQuestion += item.total;
-
     });
 
-    const percent =
-        totalQuestion===0
-        ?0
-        :(totalCorrect/totalQuestion*100);
+    const percent = totalQuestion === 0 ? 0 : (totalCorrect / totalQuestion * 100);
 
-    document.getElementById("correct-count").textContent =
-        totalCorrect;
+    const correctEl = document.getElementById("correct-count");
+    const totalEl = document.getElementById("total-count");
+    const percentEl = document.getElementById("percent-score");
+    const score10El = document.getElementById("score10");
 
-    document.getElementById("total-count").textContent =
-        totalQuestion;
-
-    document.getElementById("percent-score").textContent =
-        percent.toFixed(1)+"%";
-
-    document.getElementById("score10").textContent =
-        (percent/10).toFixed(1);
-
+    if (correctEl) correctEl.textContent = totalCorrect;
+    if (totalEl) totalEl.textContent = totalQuestion;
+    if (percentEl) percentEl.textContent = percent.toFixed(1) + "%";
+    if (score10El) score10El.textContent = (percent / 10).toFixed(1);
 }
-
-
 
 // =========================================
 // CHECK EXERCISE
 // =========================================
-function checkExercise(exId,type){
+function checkExercise(exId, type) {
+    const section = document.getElementById(`exercise-${exId}`);
+    if (!section) return;
 
-    const section=document.getElementById(`exercise-${exId}`);
+    let totalQuestions = 0;
+    let correctCount = 0;
 
-    let totalQuestions=0;
-    let correctCount=0;
+    if (type === "text") {
+        const inputs = section.querySelectorAll("input[data-answer]");
+        totalQuestions = inputs.length;
 
-    if(type==="text"){
+        inputs.forEach(input => {
+            const user = input.value.trim().toLowerCase();
+            const answer = input.dataset.answer.trim().toLowerCase();
 
-        const inputs=section.querySelectorAll("input[data-answer]");
+            input.classList.remove("input-correct", "input-incorrect");
 
-        totalQuestions=inputs.length;
-
-        inputs.forEach(input=>{
-
-            const user=input.value.trim().toLowerCase();
-            const answer=input.dataset.answer.trim().toLowerCase();
-
-            input.classList.remove(
-                "input-correct",
-                "input-incorrect"
-            );
-
-            if(user!=="" && user===answer){
-
+            if (user !== "" && user === answer) {
                 input.classList.add("input-correct");
-
                 correctCount++;
-
-            }else{
-
+            } else {
                 input.classList.add("input-incorrect");
-
             }
-
         });
-
     }
+    else if (type === "radio") {
+        const questions = section.querySelectorAll(".exercise-item");
+        totalQuestions = questions.length;
 
-    else if(type==="radio"){
+        questions.forEach(q => {
+            const selected = q.querySelector("input[type=radio]:checked");
 
-        const questions=section.querySelectorAll(".exercise-item");
-
-        totalQuestions=questions.length;
-
-        questions.forEach(q=>{
-
-            const selected=q.querySelector(
-                "input[type=radio]:checked"
-            );
-
-            q.querySelectorAll("label").forEach(label=>{
-
-                label.classList.remove(
-                    "option-correct",
-                    "option-incorrect"
-                );
-
+            q.querySelectorAll("label").forEach(label => {
+                label.classList.remove("option-correct", "option-incorrect");
             });
 
-            if(selected){
-
-                if(selected.dataset.answer==="true"){
-
-                    selected.parentElement.classList.add(
-                        "option-correct"
-                    );
-
+            if (selected) {
+                if (selected.dataset.answer === "true") {
+                    selected.parentElement.classList.add("option-correct");
                     correctCount++;
-
+                } else {
+                    selected.parentElement.classList.add("option-incorrect");
                 }
-                else{
-
-                    selected.parentElement.classList.add(
-                        "option-incorrect"
-                    );
-
-                }
-
             }
-
         });
-
     }
+    else if (type === "select") {
+        const selects = section.querySelectorAll("select[data-answer]");
+        totalQuestions = selects.length;
 
-    else if(type==="select"){
+        selects.forEach(select => {
+            select.classList.remove("input-correct", "input-incorrect");
 
-        const selects=section.querySelectorAll(
-            "select[data-answer]"
-        );
-
-        totalQuestions=selects.length;
-
-        selects.forEach(select=>{
-
-            select.classList.remove(
-                "input-correct",
-                "input-incorrect"
-            );
-
-            if(select.value===select.dataset.answer){
-
+            if (select.value === select.dataset.answer) {
                 select.classList.add("input-correct");
-
                 correctCount++;
-
-            }
-            else if(select.value!==""){
-
+            } else if (select.value !== "") {
                 select.classList.add("input-incorrect");
-
             }
-
         });
-
     }
 
-
-
-    // cập nhật điểm từng bài
-
-    const scoreDisplay=document.getElementById(
-        `score-${exId}`
-    );
-
-    scoreDisplay.textContent=
-        `${correctCount}/${totalQuestions} câu đúng`;
-
-
-
-    if(correctCount===totalQuestions && totalQuestions>0){
-
-        scoreDisplay.classList.add("perfect");
-
-    }
-    else{
-
-        scoreDisplay.classList.remove("perfect");
-
+    // Update score display for this exercise
+    const scoreDisplay = document.getElementById(`score-${exId}`);
+    if (scoreDisplay) {
+        scoreDisplay.textContent = `${correctCount}/${totalQuestions} câu đúng`;
+        if (correctCount === totalQuestions && totalQuestions > 0) {
+            scoreDisplay.classList.add("perfect");
+        } else {
+            scoreDisplay.classList.remove("perfect");
+        }
     }
 
-
-
-    // cập nhật dashboard
-
-    scoreStorage[exId]={
-
-        correct:correctCount,
-
-        total:totalQuestions
-
+    // Update global dashboard
+    scoreStorage[exId] = {
+        correct: correctCount,
+        total: totalQuestions
     };
-
     updateResultDashboard();
 
-
-
-    localStorage.setItem(
-
-        `lesson_ex_${exId}_done`,
-
-        "true"
-
-    );
-
+    // Mark as done for transcript unlock
+    localStorage.setItem(`lesson_ex_${exId}_done`, "true");
     checkGlobalCompletion();
-
 }
-
-
-
-
 
 // =========================================
 // RESET EXERCISE
 // =========================================
-function resetExercise(exId,type){
+function resetExercise(exId, type) {
+    const section = document.getElementById(`exercise-${exId}`);
+    if (!section) return;
 
-    const section=document.getElementById(
-        `exercise-${exId}`
-    );
-
-    let totalQuestions=0;
-
-
-
-    if(type==="text"){
-
-        const inputs=section.querySelectorAll(
-            "input[data-answer]"
-        );
-
-        totalQuestions=inputs.length;
-
-        inputs.forEach(input=>{
-
-            input.value="";
-
-            input.classList.remove(
-
-                "input-correct",
-
-                "input-incorrect"
-
-            );
-
-        });
-
-    }
-
-    else if(type==="radio"){
-
-        const radios=section.querySelectorAll(
-            "input[type=radio]"
-        );
-
-        totalQuestions=
-            section.querySelectorAll(
-                ".exercise-item"
-            ).length;
-
-        radios.forEach(r=>{
-
-            r.checked=false;
-
-            r.parentElement.classList.remove(
-
-                "option-correct",
-
-                "option-incorrect"
-
-            );
-
-        });
-
-    }
-
-    else if(type==="select"){
-
-        const selects=section.querySelectorAll(
-            "select[data-answer]"
-        );
-
-        totalQuestions=selects.length;
-
-        selects.forEach(select=>{
-
-            select.value="";
-
-            select.classList.remove(
-
-                "input-correct",
-
-                "input-incorrect"
-
-            );
-
-        });
-
-    }
-
-
-
-    document.getElementById(
-
-        `score-${exId}`
-
-    ).textContent="Chưa làm";
-
-
-
-    document.getElementById(
-
-        `score-${exId}`
-
-    ).classList.remove("perfect");
-
-
-
-    scoreStorage[exId]={
-
-        correct:0,
-
-        total:totalQuestions
-
-    };
-
-
-
-    updateResultDashboard();
-
-
-
-    localStorage.removeItem(
-
-        `lesson_ex_${exId}_done`
-
-    );
-
-
-
-    checkGlobalCompletion();
-
-}
-
-
-    document.getElementById(`score-${exId}`).textContent = 'Chưa làm';
-    document.getElementById(`score-${exId}`).classList.remove('perfect');
     let totalQuestions = 0;
 
-if(type==="text"){
-    totalQuestions=section.querySelectorAll("input[data-answer]").length;
-}
-else if(type==="radio"){
-    totalQuestions=section.querySelectorAll(".exercise-item").length;
-}
-else if(type==="select"){
-    totalQuestions=section.querySelectorAll("select[data-answer]").length;
-}
+    if (type === "text") {
+        const inputs = section.querySelectorAll("input[data-answer]");
+        totalQuestions = inputs.length;
+        inputs.forEach(input => {
+            input.value = "";
+            input.classList.remove("input-correct", "input-incorrect");
+        });
+    }
+    else if (type === "radio") {
+        const radios = section.querySelectorAll("input[type=radio]");
+        totalQuestions = section.querySelectorAll(".exercise-item").length;
+        radios.forEach(r => {
+            r.checked = false;
+            r.parentElement.classList.remove("option-correct", "option-incorrect");
+        });
+    }
+    else if (type === "select") {
+        const selects = section.querySelectorAll("select[data-answer]");
+        totalQuestions = selects.length;
+        selects.forEach(select => {
+            select.value = "";
+            select.classList.remove("input-correct", "input-incorrect");
+        });
+    }
 
-scoreStorage[exId]={
-    correct:0,
-    total:totalQuestions
-};
+    // Reset score display
+    const scoreDisplay = document.getElementById(`score-${exId}`);
+    if (scoreDisplay) {
+        scoreDisplay.textContent = "Chưa làm";
+        scoreDisplay.classList.remove("perfect");
+    }
 
-updateResultDashboard();
+    // Update global dashboard
+    scoreStorage[exId] = {
+        correct: 0,
+        total: totalQuestions
+    };
+    updateResultDashboard();
+
+    // Remove completion mark
     localStorage.removeItem(`lesson_ex_${exId}_done`);
     checkGlobalCompletion();
-    scoreStorage[exId] = {
-    correct: 0,
-    total: totalQuestions
-};
-
-updateResultDashboard();
 }
 
 // =========================================
 // GLOBAL COMPLETION & TRANSCRIPT UNLOCK
 // =========================================
 function checkGlobalCompletion() {
-    // Check if all 4 exercises have been marked as done
     const ex1 = localStorage.getItem('lesson_ex_1_done') === 'true';
     const ex2 = localStorage.getItem('lesson_ex_2_done') === 'true';
     const ex3 = localStorage.getItem('lesson_ex_3_done') === 'true';
@@ -458,6 +271,8 @@ function checkGlobalCompletion() {
     const overlay = document.getElementById('transcript-overlay');
     const unlockBtn = document.getElementById('unlock-transcript-btn');
     const transcriptSection = document.getElementById('transcript-section');
+
+    if (!overlay || !unlockBtn || !transcriptSection) return;
 
     if (allDone) {
         unlockBtn.disabled = false;
@@ -478,7 +293,7 @@ function checkGlobalCompletion() {
 }
 
 // =========================================
-// AUDIO PLAYER LOGIC (Giữ nguyên)
+// AUDIO PLAYER LOGIC
 // =========================================
 function initAudioPlayer(audio) {
     const playBtn = document.getElementById('play-btn');
@@ -487,6 +302,8 @@ function initAudioPlayer(audio) {
     const durationEl = document.getElementById('duration');
     const volumeControl = document.getElementById('volume-control');
     const speedControl = document.getElementById('speed-control');
+
+    if (!playBtn || !audio) return;
 
     playBtn.addEventListener('click', () => {
         if (audio.paused) {
@@ -500,17 +317,23 @@ function initAudioPlayer(audio) {
 
     audio.addEventListener('timeupdate', () => {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.value = progress || 0;
-        currentTimeEl.textContent = formatTime(audio.currentTime);
-        durationEl.textContent = formatTime(audio.duration || 0);
+        if (progressBar) progressBar.value = progress || 0;
+        if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
+        if (durationEl) durationEl.textContent = formatTime(audio.duration || 0);
     });
 
-    progressBar.addEventListener('input', (e) => {
-        audio.currentTime = (e.target.value / 100) * audio.duration;
-    });
+    if (progressBar) {
+        progressBar.addEventListener('input', (e) => {
+            audio.currentTime = (e.target.value / 100) * audio.duration;
+        });
+    }
 
-    volumeControl.addEventListener('input', (e) => { audio.volume = e.target.value; });
-    speedControl.addEventListener('change', (e) => { audio.playbackRate = parseFloat(e.target.value); });
+    if (volumeControl) {
+        volumeControl.addEventListener('input', (e) => { audio.volume = e.target.value; });
+    }
+    if (speedControl) {
+        speedControl.addEventListener('change', (e) => { audio.playbackRate = parseFloat(e.target.value); });
+    }
 }
 
 function formatTime(seconds) {
