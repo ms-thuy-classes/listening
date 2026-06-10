@@ -27,7 +27,8 @@ Built with HTML, CSS, vanilla JS – **no backend**, deployable on GitHub Pages.
 
 1. Put the audio file into `audio/` (e.g. `lesson21.mp3`)
 2. Copy `listening/lesson1.html` → `listening/lesson21.html` and change the `lessonId` in the script (subtract 1 from the number)
-3. Add a new object to `data/lessons.json` with the correct `title`, `category`, `level`, `duration`, `thumbnail`, `audio` path, and `file` path pointing to the new HTML.
+3. Đổi data-lesson-index: Ở thẻ <body>, đổi số thứ tự. (Ví dụ: lesson1.html là 0, lesson2.html là 1, lesson3.html là 2...). Điều này giúp JS tự động lấy đúng Tiêu đề, Link Audio từ file lessons.json.
+4. Add a new object to `data/lessons.json` with the correct `title`, `category`, `level`, `duration`, `thumbnail`, `audio` path, and `file` path pointing to the new HTML.
 
 The homepage will automatically show the new lesson – no extra edits needed.
 
