@@ -44,15 +44,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =========================================
 // STUDENT NAME MANAGEMENT
 // =========================================
-function initStudentName() {
-    const nameInput = document.getElementById('student-name');
-    const savedName = localStorage.getItem('student_name_ms_thuy');
-    if (savedName) nameInput.value = savedName;
+const startBtn=document.getElementById("start-btn");
 
-    nameInput.addEventListener('input', (e) => {
-        localStorage.setItem('student_name_ms_thuy', e.target.value.trim());
-    });
+startBtn.addEventListener("click",()=>{
+
+const name=document.getElementById("student-name").value.trim();
+
+if(name===""){
+
+alert("Vui lòng nhập tên học sinh!");
+
+document.getElementById("student-name").focus();
+
+return;
+
 }
+
+document.getElementById("student-display").textContent=name;
+
+});
 
 // =========================================
 // EXERCISE CHECKING LOGIC
