@@ -1,81 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Learn English listening with Ms. Thúy - premium interactive lessons from A1 to C2, Cambridge preparation, and IELTS training.">
-  <title>Learn with Ms. Thúy | English Listening Lessons</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="assets/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn with Ms. Thúy - Improve your English listening step by step with carefully designed lessons.">
+    <title>Learn with Ms. Thúy | English Listening</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png">
 </head>
 <body>
-  <nav class="navbar glass-nav" id="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Ms. Thúy Logo" onerror="this.src='https://placehold.co/40x40?text=MT'">
-        <span>Learn with Ms. Thúy</span>
-      </div>
-      <div class="nav-links" id="navLinks">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#listening" class="nav-link">Listening</a>
-        <a href="#categories" class="nav-link">Categories</a>
-        <button id="darkModeToggle" class="dark-toggle"><i class="fas fa-moon"></i></button>
-      </div>
-      <div class="nav-actions">
-        <div class="search-bar-container">
-          <i class="fas fa-search search-icon"></i>
-          <input type="text" id="globalSearchInput" placeholder="🔍 Search listening lessons..." class="search-input">
+    <!-- Sticky Navigation -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🎧</span>
+                <span class="logo-text">Learn with Ms. Thúy</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#lessons-section">Listening</a>
+                <a href="#categories-section">Categories</a>
+            </div>
+            <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
         </div>
-        <button id="darkModeToggleDesktop" class="dark-toggle"><i class="fas fa-moon"></i></button>
-        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-container">
-        <div class="hero-content">
-          <h1 class="hero-title">Learn with Ms. Thúy</h1>
-          <p class="hero-subtitle">Improve your English listening step by step with carefully designed lessons.</p>
-          <a href="#lessons-section" class="cta-button animated-btn" id="startLearningBtn">Start Learning <i class="fas fa-arrow-right"></i></a>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <h1 class="fade-in-up">Learn with Ms. Thúy</h1>
+            <p class="subtitle fade-in-up delay-1">Improve your English listening step by step with carefully designed lessons.</p>
+            <a href="#lessons-section" class="btn btn-primary fade-in-up delay-2">Start Learning</a>
         </div>
-        <div class="hero-illustration">
-          <div class="floating-elements">
-            <i class="fas fa-head-side-vr"></i>
-            <i class="fas fa-microphone-alt"></i>
-            <i class="fas fa-book-open"></i>
-          </div>
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
         </div>
-      </div>
-    </section>
+    </header>
 
-    <section id="listening" class="lessons-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Listening Library</h2>
-          <p>Explore premium audio lessons with transcripts & exercises</p>
-        </div>
-        <div class="filter-sticky">
-          <div class="category-filter" id="categoryFilter"></div>
-        </div>
-        <div id="lessonsGrid" class="lessons-grid"></div>
-        <div class="pagination-container" id="paginationControls"></div>
-      </div>
-    </section>
-  </main>
+    <!-- Main Content -->
+    <main class="container" id="lessons-section">
+        <!-- Search Bar -->
+        <section class="search-section fade-in-up">
+            <div class="search-box glass">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="search-input" placeholder="🔍 Search listening lessons by title, level, or category...">
+            </div>
+        </section>
 
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-col"><h3>Learn with Ms. Thúy</h3><p>Empowering English learners worldwide.</p><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
-      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#listening">All Lessons</a></li></ul></div>
-      <div class="footer-col"><h4>Categories</h4><ul><li><a href="#">Cambridge Series</a></li><li><a href="#">IELTS</a></li><li><a href="#">CEFR A1-C2</a></li></ul></div>
-      <div class="footer-col"><h4>© 2025 Ms. Thúy</h4><p>All lessons for educational use.</p></div>
-    </div>
-  </footer>
-  <button id="backToTop" class="back-to-top"><i class="fas fa-chevron-up"></i></button>
-  <script src="js/app.js"></script>
+        <!-- Category Filter -->
+        <section class="category-filter sticky-filter" id="categories-section">
+            <div class="category-pills" id="category-container">
+                <!-- Categories injected by JS -->
+            </div>
+        </section>
+
+        <!-- Lessons Grid -->
+        <section class="lessons-grid" id="lessons-grid">
+            <!-- Loading Skeleton -->
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </section>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6"/></svg>
+            <h3>No lessons found</h3>
+            <p>Try adjusting your search or category filter.</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination injected by JS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer glass">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>Learn with Ms. Thúy</h3>
+                <p>Empowering your English listening journey.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="#lessons-section">Listening Lessons</a>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="YouTube">📺</a>
+                    <a href="#" aria-label="Email">✉️</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Learn with Ms. Thúy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
