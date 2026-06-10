@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson - Learn with Ms. Thúy</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .lesson-container { max-width: 900px; margin: 2rem auto; padding: 2rem; background: var(--card-bg); border-radius: 2rem; backdrop-filter: blur(8px); }
+    .audio-player-custom { background: #eef2ff; padding: 1rem; border-radius: 3rem; margin: 1.5rem 0; }
+    .vocab-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .vocab-table td, .vocab-table th { border-bottom: 1px solid #ddd; padding: 8px; }
+    .exercise-box { background: rgba(167,139,250,0.1); padding: 1rem; border-radius: 1rem; margin: 1rem 0; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <nav class="navbar glass-nav"><div class="nav-container"><div class="logo"><img src="../assets/logo.png" onerror="this.src='https://placehold.co/40x40?text=MT'"><span>Learn with Ms. Thúy</span></div><div class="nav-links"><a href="../index.html">Home</a><button id="darkModeToggle" class="dark-toggle"><i class="fas fa-moon"></i></button></div></div></nav>
+  
+  <div class="lesson-container" id="lessonContent">
+    <div id="breadcrumb"><a href="../index.html">Home</a> / <span id="lessonTitle">Loading...</span></div>
+    <h1 id="lessonTitleH1"></h1>
+    <p id="lessonDesc"></p>
+    <div><span class="badge" id="catBadge"></span> <span class="badge" id="levelBadge"></span> <span id="durationBadge"></span></div>
+    
+    <div class="audio-player-custom" id="audioPlayerArea">
+      <audio id="audioElement" controls style="width:100%"></audio>
+      <div><label>Playback speed: </label><select id="speedSelect"><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option></select></div>
+    </div>
+    
+    <h3>📝 Transcript</h3><div id="transcript"></div>
+    <h3>📖 Vocabulary</h3><table class="vocab-table" id="vocabTable"></table>
+    <h3>✍️ Notes</h3><div id="notes"></div>
+    <h3>📚 Exercises</h3><div id="exercises"></div>
+    <h3>🔍 Answers</h3><div id="answers"></div>
+    <div class="nav-buttons"><a href="../index.html" class="btn-lesson">🏠 Back to Home</a></div>
+  </div>
+  <footer class="footer"><div class="footer-container"><div>© 2025 Learn with Ms. Thúy</div></div></footer>
+  <script>
+    // Get lesson id from file name: lesson1.html -> id=1 (index 0 in array)
+    const pathParts = window.location.pathname.split('/');
+    let fileName = pathParts[pathParts.length-1];
+    let lessonId = parseInt(fileName.replace('lesson','').replace('.html','')) - 1;
+    fetch('../data/lessons.json').then(res=>res.json()).then(lessons=>{
+      const lesson = lessons[lessonId];
+      if(!lesson){ document.getElementById('lessonContent').innerHTML='<p>Lesson not found</p>'; return; }
+      document.title = lesson.title;
+      document.getElementById('breadcrumb').innerHTML = `<a href="../index.html">Home</a> / ${lesson.title}`;
+      document.getElementById('lessonTitleH1').innerText = lesson.title;
+      document.getElementById('lessonDesc').innerText = lesson.description;
+      document.getElementById('catBadge').innerText = lesson.category;
+      document.getElementById('levelBadge').innerText = lesson.level;
+      document.getElementById('durationBadge').innerHTML = `<i class="far fa-clock"></i> ${lesson.duration}`;
+      const audio = document.getElementById('audioElement');
+      audio.src = '../'+lesson.audio;
+      const speedSelect = document.getElementById('speedSelect');
+      speedSelect.addEventListener('change',()=> audio.playbackRate = parseFloat(speedSelect.value));
+      document.getElementById('transcript').innerHTML = lesson.transcript || '<p>Transcript coming soon.</p>';
+      if(lesson.vocabulary){
+        let html = '<tr><th>Word</th><th>Meaning</th></tr>';
+        lesson.vocabulary.forEach(v=> html+=`<tr><td>${v[0]}</td><td>${v[1]}</td></tr>`);
+        document.getElementById('vocabTable').innerHTML = html;
+      } else document.getElementById('vocabTable').innerHTML = '<tr><td colspan="2">No vocabulary added.</td></tr>';
+      document.getElementById('notes').innerHTML = lesson.notes || '<p>Add your personal notes here.</p>';
+      document.getElementById('exercises').innerHTML = lesson.exercises || '<div class="exercise-box">Exercises will be available soon.</div>';
+      document.getElementById('answers').innerHTML = lesson.answers || '<p>Answers provided after completion.</p>';
+    }).catch(()=>document.getElementById('lessonContent').innerHTML='<p>Error loading lesson data.</p>');
+    // Dark mode
+    if(localStorage.getItem("darkMode")==="enabled") document.body.classList.add("dark");
+    document.getElementById("darkModeToggle")?.addEventListener("click",()=>{ document.body.classList.toggle("dark"); localStorage.setItem("darkMode",document.body.classList.contains("dark")?"enabled":"disabled"); });
+  </script>
+</body>
+</html>
