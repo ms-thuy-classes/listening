@@ -55,14 +55,6 @@
             </div>
         </section>
 
-        <!-- Transcript (Full text for reference) -->
-        <section class="lesson-section fade-in-up delay-2">
-            <h2 class="section-title">📝 Transcript (Lời nghe)</h2>
-            <p><em>(Dán toàn bộ nội dung bài nghe vào đây. Học sinh có thể đọc lại sau khi làm bài tập.)</em></p>
-            <p><strong>Receptionist:</strong> Good morning, how can I help you?</p>
-            <p><strong>Customer:</strong> I'd like to book a room for tonight.</p>
-        </section>
-
         <!-- ========================================== -->
         <!-- BÀI TẬP (EXERCISES) - XÓA PHẦN KHÔNG CẦN -->
         <!-- ========================================== -->
@@ -74,7 +66,68 @@
             <label for="student-name">👤 Tên học sinh:</label>
             <input type="text" id="student-name" class="student-name-input" placeholder="Nhập tên của bạn để bắt đầu làm bài...">
         </section>
+<!-- ========================================== -->
+<!-- KẾT QUẢ HỌC SINH -->
+<!-- ========================================== -->
+<section class="student-result-card fade-in-up delay-1">
+    <div class="result-header">
+        🎓 Kết quả học tập
+    </div>
 
+    <div class="result-grid">
+
+        <div class="result-item">
+            <span class="icon">👤</span>
+            <div>
+                <div class="label">Học sinh</div>
+                <div class="value" id="student-display">
+                    Chưa nhập
+                </div>
+            </div>
+        </div>
+
+        <div class="result-item">
+            <span class="icon">✅</span>
+            <div>
+                <div class="label">Số câu đúng</div>
+                <div class="value" id="correct-count">
+                    0
+                </div>
+            </div>
+        </div>
+
+        <div class="result-item">
+            <span class="icon">📝</span>
+            <div>
+                <div class="label">Tổng số câu</div>
+                <div class="value" id="total-count">
+                    0
+                </div>
+            </div>
+        </div>
+
+        <div class="result-item">
+            <span class="icon">📊</span>
+            <div>
+                <div class="label">Tỷ lệ đúng</div>
+                <div class="value" id="percent-score">
+                    0%
+                </div>
+            </div>
+        </div>
+
+        <div class="result-item highlight">
+            <span class="icon">⭐</span>
+            <div>
+                <div class="label">Điểm (thang 10)</div>
+                <div class="value big-score" id="score10">
+                    0.0
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
         <!-- ========================================== -->
         <!-- BÀI 1: Gap-fill (Nghe và điền vào transcript) -->
         <!-- ========================================== -->
