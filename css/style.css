@@ -843,3 +843,63 @@ img { max-width: 100%; display: block; }
     box-shadow: 0 4px 15px rgba(162, 210, 255, 0.4);
 }
 .unlock-btn.unlocked:hover { transform: translateY(-2px); }
+
+.student-result-card{
+    margin:25px 0;
+    padding:25px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#fde2ff,#dff7ff,#e7ffe8);
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.result-header{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:20px;
+    color:#5b4b8a;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+}
+
+.result-item{
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    transition:.3s;
+}
+
+.result-item:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.result-item .icon{
+    font-size:34px;
+}
+
+.label{
+    color:#777;
+    font-size:14px;
+}
+
+.value{
+    font-size:22px;
+    font-weight:700;
+    color:#333;
+}
+
+.highlight{
+    background:linear-gradient(135deg,#ffe58f,#ffd6e7,#d8f8ff);
+}
+
+.big-score{
+    font-size:42px;
+    color:#ff6b81;
+}
