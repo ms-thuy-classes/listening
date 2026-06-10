@@ -1,3 +1,4 @@
+const scoreStorage = {};
 document.addEventListener('DOMContentLoaded', async () => {
     const lessonIndex = parseInt(document.body.getAttribute('data-lesson-index'), 10);
     
@@ -63,7 +64,35 @@ return;
 document.getElementById("student-display").textContent=name;
 
 });
+function updateResultDashboard(){
 
+    let totalCorrect = 0;
+    let totalQuestion = 0;
+
+    Object.values(scoreStorage).forEach(item=>{
+
+        totalCorrect += item.correct;
+        totalQuestion += item.total;
+
+    });
+
+    const percent =
+        totalQuestion === 0
+        ? 0
+        : totalCorrect / totalQuestion * 100;
+
+    document.getElementById("correct-count").textContent =
+        totalCorrect;
+
+    document.getElementById("total-count").textContent =
+        totalQuestion;
+
+    document.getElementById("percent-score").textContent =
+        percent.toFixed(1) + "%";
+
+    document.getElementById("score10").textContent =
+        (percent / 10).toFixed(1);
+}
 // =========================================
 // EXERCISE CHECKING LOGIC
 // =========================================
@@ -87,6 +116,11 @@ function checkExercise(exId, type) {
                 input.classList.add('input-incorrect');
             }
         });
+        scoreStorage[exerciseId] = {
+    correct: correct,
+    total: total };
+
+updateResultDashboard();
     } 
     else if (type === 'radio') {
         const questions = section.querySelectorAll('.exercise-item');
@@ -163,6 +197,12 @@ function resetExercise(exId, type) {
     
     localStorage.removeItem(`lesson_ex_${exId}_done`);
     checkGlobalCompletion();
+    scoreStorage[exerciseId] = {
+    correct: 0,
+    total: total
+};
+
+updateResultDashboard();
 }
 
 // =========================================
